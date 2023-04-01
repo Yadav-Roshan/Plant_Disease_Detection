@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 # from streamlit_elements import elements, mui, html
 from tensorflow.keras.models import Sequential, model_from_json
 import tensorflow as tf
-import cv2
+# import cv2
 
 st.set_page_config(page_title="Plant Disease Prediction", page_icon="🌴", layout="wide")
 
