@@ -1,20 +1,19 @@
 import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
-# from streamlit_elements import elements, mui, html
 from tensorflow.keras.models import Sequential, model_from_json
 import tensorflow as tf
-# import cv2
+import cv2
 
 st.set_page_config(page_title="Plant Disease Prediction", page_icon="🌴", layout="wide")
 
 # Loading model
-json_file = open('model.json', 'r')
+json_file = open(r'model.json', 'r')
 loaded_model_json = json_file.read()
 json_file.close()
 loaded_model = model_from_json(loaded_model_json)
 # load weights into new model
-loaded_model.load_weights("model.h5")
+loaded_model.load_weights(r"model.h5")
 print("Loaded model from disk")
 loaded_model.compile(loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=False), optimizer='adam', metrics=['accuracy'])
 
@@ -49,6 +48,7 @@ with st.sidebar:
 
     with st.expander("Prediction", True):
         app = st.checkbox('App', value = True)
+        analysis = st.checkbox('Analysis', value = True)
 
 if app:
     st.title("Plant Disease Prediction")
@@ -64,3 +64,10 @@ if app:
             predicted_class, confidence = predict(loaded_model, image) 
             st.write(f"Predicted: {predicted_class}.")
             st.write(f"Confidence: {confidence}%")
+
+if analysis:
+    accuracy, output = st.columns(2)
+    accuracy.title("Accuracy of Model")
+    accuracy.image(r"https://github.com/Yadav-Roshan/Plant_Disease_Detection/blob/main/images/model_accuracy.png?raw=true")
+    output.title("Validation Output")
+    output.image(r"https://github.com/Yadav-Roshan/Plant_Disease_Detection/blob/main/images/output_labeled.png?raw=true")
