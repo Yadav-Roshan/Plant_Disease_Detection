@@ -60,6 +60,7 @@ if app:
         if uploaded_file is not None:
             file_bytes = np.asarray(bytearray(uploaded_file.read()), dtype=np.uint8)
             image = cv2.imdecode(file_bytes, 1)
+            image = cv2.resize(image, (256, 256))
             st.image(image)
             predicted_class, confidence = predict(loaded_model, image) 
             st.write(f"Predicted: {predicted_class}.")
